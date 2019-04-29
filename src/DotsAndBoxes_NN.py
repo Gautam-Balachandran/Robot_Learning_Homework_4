@@ -19,8 +19,9 @@ from sklearn.kernel_approximation import RBFSampler
 
 
 class Estimator():
-    def __init__(self,action_space,current_state):
+    def __init__(self,action_space,current_state,state_size):
         self.models = []
+        self.state_size = state_size
         actions_size = len(action_space)
         for _ in range(actions_size):
             model = SGDRegressor(learning_rate="constant")
@@ -29,7 +30,16 @@ class Estimator():
 
     def featurize_state(self, state):
         """ Returns the featurized representation for a state. """
+        observation_samples = np.arange(0,self.state_size,1)
+        scaler = sklearn.preprocessing.StandardScaler()
+        scaler.fit(observation_samples)
         scaled = scaler.transform([state])
+        featurizer = sklearn.pipeline.FeatureUnion([
+        ("rbf1", RBFSampler(gamma=5.0, n_components=100)),
+        ("rbf2", RBFSampler(gamma=2.0, n_components=100)),
+        ("rbf3", RBFSampler(gamma=1.0, n_components=100)),
+        ("rbf4", RBFSampler(gamma=0.5, n_components=100))
+        ])
         featurized = featurizer.transform(scaled)
         return featurized[0]
 

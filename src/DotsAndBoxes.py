@@ -165,7 +165,7 @@ class DotsandBoxes():
     def playWithNN(self):
         move = 0
         self.current_state = self.update_state
-        estimator = dbn.Estimator(self.lines_list,self.current_state)
+        estimator = dbn.Estimator(self.lines_list,self.current_state,self.state_size)
         if (self.boxes == 1).sum() == self.size*self.size: # Checks if any empty boxes left
             print("All Boxes filled")
             print("-------------------------------------//////-------------------------------------------------")
