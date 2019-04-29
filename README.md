@@ -12,7 +12,7 @@ The program code makes use of the following python packages :
 		
 		pip install -U scikit-learn
 		
-	   or can be installedin Conda using the command
+	   or can be installed in Conda using the command
 	   
 		conda install scikit-learn
 	
